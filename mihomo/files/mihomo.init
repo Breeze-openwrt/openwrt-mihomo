@@ -25,7 +25,9 @@ run_ui_metacubexd_src_dir="$run_ui_dir/metacubexd-gh-pages"
 run_ui_metacubexd_dir="$run_ui_dir/metacubexd"
 geoip_mmdb_path="$run_dir/Country.mmdb"
 geoip_dat_path="$run_dir/GeoIP.dat"
+geoip_v2ray_path="/usr/share/v2ray/geoip.dat"
 geosite_path="$run_dir/GeoSite.dat"
+geosite_v2ray_path="/usr/share/v2ray/geosite.dat"
 mixin_path="$home_dir/mixin.yaml"
 reload_file_trigger="$home_dir/reload_file_trigger.sh"
 
@@ -70,10 +72,10 @@ start_service() {
 		curl -s -L -o "$geoip_mmdb_path" "$geoip_mmdb_url"
 	fi
 	if [ ! -f "$geoip_dat_path" ]; then
-		curl -s -L -o "$geoip_dat_path" "$geoip_dat_url"
+		[ -f "$geoip_v2ray_path" ] && ln -s "$geoip_v2ray_path" "$geoip_dat_path" || curl -s -L -o "$geoip_dat_path" "$geoip_dat_url"
 	fi
 	if [ ! -f "$geosite_path" ]; then
-		curl -s -L -o "$geosite_path" "$geosite_url"
+		[ -f "$geosite_v2ray_path" ] && ln -s "$geosite_v2ray_path" "$geosite_path" || curl -s -L -o "$geosite_path" "$geosite_url"
 	fi
 	# load mixin
 	# global
